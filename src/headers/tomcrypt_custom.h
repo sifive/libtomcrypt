@@ -91,7 +91,7 @@
    #undef  LTC_DES
    #undef  LTC_CAST5
 
-   #define LTC_NO_MODES
+   #undef  LTC_NO_MODES
    #define LTC_ECB_MODE
    #define LTC_CBC_MODE
    #define LTC_CTR_MODE
@@ -108,7 +108,8 @@
    #define LTC_NO_MACS
    #undef  LTC_HMAC
    #undef  LTC_OMAC
-   #undef  LTC_CCM_MODE
+   #define LTC_CCM_MODE
+   #define LTC_GCM_MODE
 
    #define LTC_NO_PRNGS
    #undef  LTC_SPRNG
