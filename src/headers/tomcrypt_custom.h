@@ -7,6 +7,7 @@
 #include "glib-compat.h"
 
 #define LTC_NO_TEST
+#define LTC_EASY
 
 /* macros for various libc functions you can change for embedded targets */
 #ifndef XMALLOC
@@ -119,6 +120,7 @@
    #undef  LTC_RNG_MAKE_PRNG
 
    #define LTC_NO_PK
+   #define LTC_NO_PKCS
    #undef LTC_MRSA
    #undef LTC_MECC
 
@@ -441,7 +443,7 @@
 #endif
 
 /* Digital Signature Algorithm */
-#define LTC_MDSA
+#undef LTC_MDSA
 
 /* Ed25519 & X25519 */
 #define LTC_CURVE25519
