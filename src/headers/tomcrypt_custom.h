@@ -10,18 +10,22 @@
 #ifndef TOMCRYPT_CUSTOM_H_
 #define TOMCRYPT_CUSTOM_H_
 
+#include "glib-compat.h"
+
+#define LTC_NO_TEST
+
 /* macros for various libc functions you can change for embedded targets */
 #ifndef XMALLOC
-#define XMALLOC  malloc
+#define XMALLOC  g_malloc
 #endif
 #ifndef XREALLOC
-#define XREALLOC realloc
+#define XREALLOC g_realloc
 #endif
 #ifndef XCALLOC
-#define XCALLOC  calloc
+#define XCALLOC(_c_, _s_)  (void *)g_malloc0((_c_) * (_s_))
 #endif
 #ifndef XFREE
-#define XFREE    free
+#define XFREE    g_free
 #endif
 
 #ifndef XMEMSET
@@ -44,6 +48,12 @@
 #endif
 #ifndef XSTRCMP
 #define XSTRCMP strcmp
+#endif
+#ifndef XSTRLEN
+#define XSTRLEN  strlen
+#endif
+#ifndef XSTRNCPY
+#define XSTRNCPY strncpy
 #endif
 
 #ifndef XCLOCK
@@ -76,9 +86,9 @@
 #ifdef LTC_EASY
    #define LTC_NO_CIPHERS
    #define LTC_RIJNDAEL
-   #define LTC_BLOWFISH
-   #define LTC_DES
-   #define LTC_CAST5
+   #undef  LTC_BLOWFISH
+   #undef  LTC_DES
+   #undef  LTC_CAST5
 
    #define LTC_NO_MODES
    #define LTC_ECB_MODE
@@ -86,53 +96,53 @@
    #define LTC_CTR_MODE
 
    #define LTC_NO_HASHES
-   #define LTC_SHA1
-   #define LTC_SHA3
-   #define LTC_SHA512
-   #define LTC_SHA384
-   #define LTC_SHA256
-   #define LTC_SHA224
-   #define LTC_HASH_HELPERS
+   #undef  LTC_SHA1
+   #undef  LTC_SHA3
+   #undef  LTC_SHA512
+   #undef  LTC_SHA384
+   #undef  LTC_SHA256
+   #undef  LTC_SHA224
+   #undef  LTC_HASH_HELPERS
 
    #define LTC_NO_MACS
-   #define LTC_HMAC
-   #define LTC_OMAC
-   #define LTC_CCM_MODE
+   #undef  LTC_HMAC
+   #undef  LTC_OMAC
+   #undef  LTC_CCM_MODE
 
    #define LTC_NO_PRNGS
-   #define LTC_SPRNG
-   #define LTC_YARROW
-   #define LTC_DEVRANDOM
-   #define LTC_TRY_URANDOM_FIRST
-   #define LTC_RNG_GET_BYTES
-   #define LTC_RNG_MAKE_PRNG
+   #undef  LTC_SPRNG
+   #undef  LTC_YARROW
+   #undef  LTC_DEVRANDOM
+   #undef  LTC_TRY_URANDOM_FIRST
+   #undef  LTC_RNG_GET_BYTES
+   #undef  LTC_RNG_MAKE_PRNG
 
    #define LTC_NO_PK
-   #define LTC_MRSA
-   #define LTC_MECC
+   #undef LTC_MRSA
+   #undef LTC_MECC
 
    #define LTC_NO_MISC
-   #define LTC_BASE64
+   #undef  LTC_BASE64
 #endif
 
 /* The minimal set of functionality to run the tests */
 #ifdef LTC_MINIMAL
    #define LTC_RIJNDAEL
-   #define LTC_SHA256
-   #define LTC_YARROW
-   #define LTC_CTR_MODE
+   #undef LTC_SHA256
+   #undef LTC_YARROW
+   #undef LTC_CTR_MODE
 
-   #define LTC_RNG_MAKE_PRNG
-   #define LTC_RNG_GET_BYTES
-   #define LTC_DEVRANDOM
-   #define LTC_TRY_URANDOM_FIRST
+   #undef LTC_RNG_MAKE_PRNG
+   #undef LTC_RNG_GET_BYTES
+   #undef LTC_DEVRANDOM
+   #undef LTC_TRY_URANDOM_FIRST
 
    #undef LTC_NO_FILE
 #endif
 
 /* Enable self-test test vector checking */
 #ifndef LTC_NO_TEST
-   #define LTC_TEST
+   #undef LTC_TEST
 #endif
 /* Enable extended self-tests */
 /* #define LTC_TEST_EXT */

@@ -84,14 +84,20 @@ enum {
 #include <tomcrypt_cfg.h>
 #include <tomcrypt_macros.h>
 #include <tomcrypt_cipher.h>
+#ifdef QEMU_SIFIVE_NO_EXCLUDE  /* never defined */
 #include <tomcrypt_hash.h>
+#endif
 #include <tomcrypt_mac.h>
+#ifdef QEMU_SIFIVE_NO_EXCLUDE  /* never defined */
 #include <tomcrypt_prng.h>
 #include <tomcrypt_pk.h>
 #include <tomcrypt_math.h>
+#endif
 #include <tomcrypt_misc.h>
 #include <tomcrypt_argchk.h>
+#ifdef QEMU_SIFIVE_NO_EXCLUDE  /* never defined */
 #include <tomcrypt_pkcs.h>
+#endif
 
 #ifdef __cplusplus
    }
