@@ -7,6 +7,11 @@
  * guarantee it works.
  */
 
+#ifdef LTC_SHA2_HCA
+#include <stdint.h>
+#include <stdbool.h>
+#endif
+
 /* ---- HASH FUNCTIONS ---- */
 #ifdef LTC_SHA3
 struct sha3_state {
@@ -345,6 +350,13 @@ int sha224_done(hash_state * md, unsigned char *hash);
 int sha224_test(void);
 extern const struct ltc_hash_descriptor sha224_desc;
 #endif
+#endif
+
+#ifdef LTC_SHA2_HCA
+void sha256_hca_init(uint32_t *state, bool sha224);
+void sha256_hca_compress(uint32_t *state, const uint8_t *buf);
+void sha512_hca_init(uint64_t *state, bool sha384);
+void sha512_hca_compress(uint64_t *state, const uint8_t *buf);
 #endif
 
 #ifdef LTC_SHA1

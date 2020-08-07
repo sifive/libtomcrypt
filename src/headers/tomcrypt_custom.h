@@ -129,6 +129,8 @@
    #undef  LTC_BASE64
 #endif
 
+#define LTC_SHA2_HCA
+
 /* The minimal set of functionality to run the tests */
 #ifdef LTC_MINIMAL
    #define LTC_RIJNDAEL
