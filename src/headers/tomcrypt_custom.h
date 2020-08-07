@@ -14,6 +14,7 @@
 
 #define LTC_NO_TEST
 #define LTC_EASY
+#define LTC_NO_PROTOTYPES
 
 /* macros for various libc functions you can change for embedded targets */
 #ifndef XMALLOC
