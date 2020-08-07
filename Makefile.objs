@@ -49,3 +49,5 @@ obj-$(CONFIG_SIFIVE_HCA_LTC) += src/misc/crypt/crypt_cipher_descriptor.o
 obj-$(CONFIG_SIFIVE_HCA_LTC) += src/misc/crypt/crypt_cipher_is_valid.o
 obj-$(CONFIG_SIFIVE_HCA_LTC) += src/misc/crypt/crypt_register_cipher.o
 obj-$(CONFIG_SIFIVE_HCA_LTC) += src/misc/crypt/crypt_argchk.o
+obj-$(CONFIG_SIFIVE_HCA_LTC) += src/hashes/sha2/sha256_hca.o
+obj-$(CONFIG_SIFIVE_HCA_LTC) += src/hashes/sha2/sha512_hca.o
