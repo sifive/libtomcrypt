@@ -88,7 +88,7 @@ void sha512_hca_init(uint64_t *state, bool sha384)
     }
 }
 
-/* compress 512-bits */
+/* compress 1024-bits */
 void sha512_hca_compress(uint64_t *state, const uint8_t *buf)
 {
     uint64_t S[8], W[80], t0, t1;
