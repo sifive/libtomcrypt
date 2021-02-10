@@ -290,6 +290,8 @@ typedef struct {
                        mode,
    /** counter width */
                        ctrlen;
+   /** fix alignment issues with pad & LTC_FAST mode on 64-bit hosts */
+   int                 dummy;
 
    /** The counter */
    unsigned char       ctr[MAXBLOCKSIZE],
