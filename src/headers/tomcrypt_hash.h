@@ -2,6 +2,43 @@
 /* SPDX-License-Identifier: Unlicense */
 
 /* ---- HASH FUNCTIONS ---- */
+enum hash_descriptor_id {
+    NID_HASH_SHA256 = 0,
+    NID_HASH_TIGER = 1,
+    NID_HASH_SHA1 = 2,
+    NID_HASH_MD5 =3,
+    NID_HASH_SHA384 = 4,
+    NID_HASH_SHA512 = 5,
+    NID_HASH_MD4 = 6,
+    NID_HASH_MD2 = 7,
+    NID_HASH_RMD128 = 8,
+    NID_HASH_RMD160 = 9,
+    NID_HASH_SHA224 = 10,
+    NID_HASH_WHIRLPOOL = 11,
+    NID_HASH_CHC = 12,
+    NID_HASH_RMD256 = 13,
+    NID_HASH_RMD320 = 14,
+    NID_HASH_SHA512_224 = 15,
+    NID_HASH_SHA512_256 = 16,
+    NID_HASH_SHA3_224 = 17,
+    NID_HASH_SHA3_256 = 18,
+    NID_HASH_SHA3_384 = 19,
+    NID_HASH_SHA3_512 = 20,
+    NID_HASH_BLAKE2S_128 = 21,
+    NID_HASH_BLAKE2S_160 = 22,
+    NID_HASH_BLAKE2S_224 = 23,
+    NID_HASH_BLAKE2S_256 = 24,
+    NID_HASH_BLAKE2B_160 = 25,
+    NID_HASH_BLAKE2B_256 = 26,
+    NID_HASH_BLAKE2B_384 = 27,
+    NID_HASH_BLAKE2B_512 = 28,
+    NID_HASH_KECCAK224 = 29,
+    NID_HASH_KECCAK256 = 30,
+    NID_HASH_KECCAK384 = 31,
+    NID_HASH_KECCAK512 = 32,
+    NID_HASH_SM3 = 33,
+
+};
 #if defined(LTC_SHA3) || defined(LTC_KECCAK)
 struct sha3_state {
     ulong64 saved;                  /* the portion of the input message that we didn't consume yet */
@@ -141,6 +178,19 @@ struct blake2b_state {
 };
 #endif
 
+#ifdef LTC_SM3
+#define SM3_DIGEST_LENGTH	32
+#define SM3_BLOCK_SIZE		64
+
+struct sm3_state {
+    ulong32 digest[8];
+	ulong64 nblocks;
+	unsigned char block[64];
+	int num;
+};
+typedef struct sm3_state sm3_ctx_t;
+#endif
+
 typedef union Hash_state {
     char dummy[1];
 #ifdef LTC_CHC_HASH
@@ -190,6 +240,9 @@ typedef union Hash_state {
 #endif
 #ifdef LTC_BLAKE2B
     struct blake2b_state blake2b;
+#endif
+#ifdef LTC_SM3
+    struct sm3_state sm3;
 #endif
 
     void *data;
@@ -476,6 +529,14 @@ int rmd320_process(hash_state * md, const unsigned char *in, unsigned long inlen
 int rmd320_done(hash_state * md, unsigned char *out);
 int rmd320_test(void);
 extern const struct ltc_hash_descriptor rmd320_desc;
+#endif
+
+#ifdef LTC_SM3
+int sm3_init(hash_state * md);
+int sm3_process(hash_state * md, const unsigned char *in, unsigned long inlen);
+int sm3_done(hash_state * md, unsigned char *hash);
+int sm3_test(void);
+extern const struct ltc_hash_descriptor sm3_desc;
 #endif
 
 

@@ -207,6 +207,7 @@
 #define LTC_SERPENT
 #define LTC_TEA
 /* for chinese standard GM */
+#define LTC_SM3
 #define LTC_SM4
 
 /* stream ciphers */

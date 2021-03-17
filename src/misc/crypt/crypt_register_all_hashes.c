@@ -91,5 +91,8 @@ int register_all_hashes(void)
    REGISTER_HASH(&chc_desc);
    LTC_ARGCHK(chc_register(find_cipher_any("aes", 8, 16)) == CRYPT_OK);
 #endif
+#ifdef LTC_SM3
+    REGISTER_HASH(&sm3_desc);
+#endif
    return CRYPT_OK;
 }
