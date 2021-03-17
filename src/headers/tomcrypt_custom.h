@@ -555,6 +555,7 @@
    #define LTC_ECC_SECP256R1
    #define LTC_ECC_SECP384R1
    #define LTC_ECC_SECP521R1
+   #define LTC_SM2
 #endif
 #endif
 
