@@ -283,7 +283,9 @@ src/misc/crypt/crypt_register_all_prngs.o src/misc/crypt/crypt_register_cipher.o
 src/misc/crypt/crypt_register_hash.o src/misc/crypt/crypt_register_prng.o src/misc/crypt/crypt_sizes.o \
 src/misc/crypt/crypt_unregister_cipher.o src/misc/crypt/crypt_unregister_hash.o \
 src/misc/crypt/crypt_unregister_prng.o src/misc/error_to_string.o src/misc/hkdf/hkdf.o \
-src/misc/hkdf/hkdf_test.o src/misc/mem_neq.o src/misc/padding/padding_depad.o \
+src/misc/hkdf/hkdf_test.o src/misc/mem_neq.o \
+src/misc/kdf/kdf_x9_63.o src/misc/kdf/kdf_x9_63_test.o\
+src/misc/padding/padding_depad.o \
 src/misc/padding/padding_pad.o src/misc/pbes/pbes.o src/misc/pbes/pbes1.o src/misc/pbes/pbes2.o \
 src/misc/pkcs12/pkcs12_kdf.o src/misc/pkcs12/pkcs12_utf8_to_utf16.o src/misc/pkcs5/pkcs_5_1.o \
 src/misc/pkcs5/pkcs_5_2.o src/misc/pkcs5/pkcs_5_test.o src/misc/ssh/ssh_decode_sequence_multi.o \

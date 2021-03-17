@@ -83,6 +83,14 @@ int hkdf(int hash_idx,
 
 #endif  /* LTC_HKDF */
 
+/* ANSI X9.63 KDF */
+#ifdef LTC_X963_KDF
+int x963_kdf_test(void);
+
+int x963_kdf(int hash_idx, const unsigned char *in,   unsigned long inlen,
+                                 unsigned char *out,  unsigned long outlen);
+#endif  /* LTC_X963_KDF */
+
 /* ---- MEM routines ---- */
 int mem_neq(const void *a, const void *b, size_t len);
 void zeromem(volatile void *out, size_t outlen);

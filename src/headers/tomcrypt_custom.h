@@ -504,6 +504,8 @@
 #define LTC_HKDF
 #endif /* LTC_NO_HKDF */
 
+#define LTC_X963_KDF
+
 #define LTC_ADLER32
 
 #define LTC_CRC32

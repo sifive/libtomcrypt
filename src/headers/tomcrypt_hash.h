@@ -37,8 +37,10 @@ enum hash_descriptor_id {
     NID_HASH_KECCAK384 = 31,
     NID_HASH_KECCAK512 = 32,
     NID_HASH_SM3 = 33,
-
 };
+
+#define HASH_MAX_MD_SIZE                 64  /* longest known is SHA512 */
+
 #if defined(LTC_SHA3) || defined(LTC_KECCAK)
 struct sha3_state {
     ulong64 saved;                  /* the portion of the input message that we didn't consume yet */
