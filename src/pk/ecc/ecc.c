@@ -435,7 +435,7 @@ const ltc_ecc_curve ltc_ecc_curves[] = {
    /* Gx       */ "32C4AE2C1F1981195F9904466A39C9948FE30BBFF2660BE1715A4589334C74C7",
    /* Gy       */ "BC3736A2F4F6779C59BDCEE36B692153D0A9877CC62A474002DF32E52139F0A0",
    /* cofactor */ 1,
-   /* OID      */ "⒈⒉156.10197.1.301"
+   /* OID      */ "1.2.156.10197.1.301"
 },
 #endif
 {
