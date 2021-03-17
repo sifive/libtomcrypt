@@ -8,6 +8,12 @@
 
 #include "common.h"
 
+#ifdef LTC_TEST_SM2
+extern const char* test_k;
+extern const char* test_x;
+extern const char* test_y;
+#endif
+
 typedef struct {
     char *name, *prov, *req;
     int  (*entry)(void);
@@ -42,6 +48,7 @@ int x25519_test(void);
 int ed25519_test(void);
 int ssh_test(void);
 int bcrypt_test(void);
+int sm2_tests(void);
 
 #ifdef LTC_PKCS_1
 struct ltc_prng_descriptor* no_prng_desc_get(void);

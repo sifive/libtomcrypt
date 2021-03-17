@@ -1,5 +1,7 @@
 /* LibTomCrypt, modular cryptographic library -- Tom St Denis */
 /* SPDX-License-Identifier: Unlicense */
+#ifndef TOMCRYPT_PK_H
+#define TOMCRYPT_PK_H
 
 /* ---- NUMBER THEORY ---- */
 
@@ -779,3 +781,5 @@ int der_decode_generalizedtime(const unsigned char *in, unsigned long *inlen,
 int der_length_generalizedtime(const ltc_generalizedtime *gtime, unsigned long *outlen);
 
 #endif
+
+#endif  /* TOMCRYPT_PK_H */

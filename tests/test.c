@@ -41,6 +41,7 @@ static const test_function test_functions[] =
        * testing with LTC_PTHREAD enabled
        */
       LTC_TEST_FN(prng_test),
+      LTC_TEST_FN(sm2_tests),
 };
 
 

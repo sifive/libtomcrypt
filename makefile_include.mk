@@ -377,7 +377,9 @@ src/pk/pkcs1/pkcs_1_v1_5_encode.o src/pk/rsa/rsa_decrypt_key.o src/pk/rsa/rsa_en
 src/pk/rsa/rsa_export.o src/pk/rsa/rsa_exptmod.o src/pk/rsa/rsa_get_size.o src/pk/rsa/rsa_import.o \
 src/pk/rsa/rsa_import_pkcs8.o src/pk/rsa/rsa_import_x509.o src/pk/rsa/rsa_key.o \
 src/pk/rsa/rsa_make_key.o src/pk/rsa/rsa_set.o src/pk/rsa/rsa_sign_hash.o \
-src/pk/rsa/rsa_sign_saltlen_get.o src/pk/rsa/rsa_verify_hash.o src/pk/x25519/x25519_export.o \
+src/pk/rsa/rsa_sign_saltlen_get.o src/pk/rsa/rsa_verify_hash.o \
+src/pk/sm2/sm2_make_key.o \
+src/pk/x25519/x25519_export.o \
 src/pk/x25519/x25519_import.o src/pk/x25519/x25519_import_pkcs8.o src/pk/x25519/x25519_import_raw.o \
 src/pk/x25519/x25519_import_x509.o src/pk/x25519/x25519_make_key.o \
 src/pk/x25519/x25519_shared_secret.o src/prngs/chacha20.o src/prngs/fortuna.o src/prngs/rc4.o \
@@ -402,7 +404,7 @@ tests/cipher_hash_test.o tests/common.o tests/der_test.o tests/dh_test.o tests/d
 tests/ecc_test.o tests/ed25519_test.o tests/file_test.o tests/mac_test.o tests/misc_test.o \
 tests/modes_test.o tests/mpi_test.o tests/multi_test.o tests/no_prng.o tests/padding_test.o \
 tests/pkcs_1_eme_test.o tests/pkcs_1_emsa_test.o tests/pkcs_1_oaep_test.o tests/pkcs_1_pss_test.o \
-tests/pkcs_1_test.o tests/prng_test.o tests/rotate_test.o tests/rsa_test.o tests/ssh_test.o \
+tests/pkcs_1_test.o tests/prng_test.o tests/rotate_test.o tests/rsa_test.o tests/sm2_test.o tests/ssh_test.o \
 tests/store_test.o tests/test.o tests/x25519_test.o
 
 # The following headers will be installed by "make install"

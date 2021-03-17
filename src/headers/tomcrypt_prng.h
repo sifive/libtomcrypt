@@ -1,5 +1,7 @@
 /* LibTomCrypt, modular cryptographic library -- Tom St Denis */
 /* SPDX-License-Identifier: Unlicense */
+#ifndef TOMCRYPT_PRNG_H
+#define TOMCRYPT_PRNG_H
 
 /* ---- PRNG Stuff ---- */
 #ifdef LTC_YARROW
@@ -220,4 +222,6 @@ int rng_make_prng(int bits, int wprng, prng_state *prng, void (*callback)(void))
 extern unsigned long (*ltc_rng)(unsigned char *out, unsigned long outlen,
       void (*callback)(void));
 #endif
+
+#endif  /* TOMCRYPT_PRNG_H */
 
