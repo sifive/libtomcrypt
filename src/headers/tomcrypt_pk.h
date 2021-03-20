@@ -384,6 +384,15 @@ int x25519_shared_secret(const curve25519_key *private_key,
 
 #endif /* LTC_CURVE25519 */
 
+#ifdef LTC_SM2
+
+int sm2_compute_id_digest(const struct ltc_hash_descriptor *hash_desc, const char *id, unsigned long idlen,
+        unsigned char *out, unsigned long *outlen, const ecc_key *ec_key);
+
+int sm2_compute_message_digest(const unsigned char *msg, size_t msglen, const char *id, size_t idlen,
+        unsigned char *out, size_t *poutlen, const ecc_key *ec_key);
+#endif  /* LTC_SM2 */
+
 #ifdef LTC_MDSA
 
 /* Max diff between group and modulus size in bytes */

@@ -4,7 +4,7 @@
  *
  * ECC curve parameters refer to chinese standard GM/T 0003.5-2012
  */
-#include "tomcrypt.h"
+#include "tomcrypt_private.h"
 #include "tomcrypt_pk.h"
 #include "tomcrypt_prng.h"
 
@@ -35,4 +35,37 @@ int sm2_make_key(ecc_key *key)
     return err;
 }
 
-#endif
+#ifdef LTC_TEST_SM2
+
+int sm2_make_key_test(const char* k, ecc_key *key)
+{
+    int            err;
+    const ltc_ecc_curve* dp;
+
+    LTC_ARGCHK(key         != NULL);
+
+    if ((err = ecc_find_curve("SM2P256V1", &dp)) != CRYPT_OK)   { return err; }
+    if ((err = ecc_set_curve(dp, key)) != CRYPT_OK)             { return err; }
+
+    /* read test private key */
+    if ((err = mp_read_radix(key->k, (char *)k, 16)) != CRYPT_OK)                          { goto error; }
+
+    /* make the public key */
+    if ((err = ltc_mp.ecc_ptmul(key->k, &key->dp.base, &key->pubkey, key->dp.A, key->dp.prime, 1)) != CRYPT_OK) {
+        goto error;
+    }
+    key->type = PK_PRIVATE;
+
+    /* success */
+    err = CRYPT_OK;
+    goto cleanup;
+
+error:
+   ecc_free(key);
+cleanup:
+   return err;
+}
+
+#endif  /* LTC_TEST_SM2 */
+
+#endif  /* LTC_SM2 */

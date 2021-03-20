@@ -380,7 +380,7 @@ src/pk/rsa/rsa_export.o src/pk/rsa/rsa_exptmod.o src/pk/rsa/rsa_get_size.o src/p
 src/pk/rsa/rsa_import_pkcs8.o src/pk/rsa/rsa_import_x509.o src/pk/rsa/rsa_key.o \
 src/pk/rsa/rsa_make_key.o src/pk/rsa/rsa_set.o src/pk/rsa/rsa_sign_hash.o \
 src/pk/rsa/rsa_sign_saltlen_get.o src/pk/rsa/rsa_verify_hash.o \
-src/pk/sm2/sm2_make_key.o \
+src/pk/sm2/sm2_id.o src/pk/sm2/sm2_make_key.o \
 src/pk/x25519/x25519_export.o \
 src/pk/x25519/x25519_import.o src/pk/x25519/x25519_import_pkcs8.o src/pk/x25519/x25519_import_raw.o \
 src/pk/x25519/x25519_import_x509.o src/pk/x25519/x25519_make_key.o \

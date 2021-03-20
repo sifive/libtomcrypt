@@ -9,9 +9,7 @@
 #include "common.h"
 
 #ifdef LTC_TEST_SM2
-extern const char* test_k;
-extern const char* test_x;
-extern const char* test_y;
+int sm2_make_key_test(const char *k, ecc_key *key);
 #endif
 
 typedef struct {
