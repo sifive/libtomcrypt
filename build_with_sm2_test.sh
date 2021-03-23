@@ -1,0 +1,3 @@
+#!/bin/bash
+
+make CFLAGS="-DUSE_GMP -DGMP_DESC -DLTC_TEST_SM2" EXTRALIBS="-lgmp" LTC_DEBUG=2 test

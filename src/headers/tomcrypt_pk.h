@@ -391,6 +391,18 @@ int sm2_compute_id_digest(const struct ltc_hash_descriptor *hash_desc, const cha
 
 int sm2_compute_message_digest(const unsigned char *msg, size_t msglen, const char *id, size_t idlen,
         unsigned char *out, size_t *poutlen, const ecc_key *ec_key);
+
+struct sm2_sign_st {
+    void *r;
+    void *s;
+};
+
+int sm2_sign(const unsigned char *dgst,  unsigned long dgstlen,
+                struct sm2_sign_st *out, const ecc_key *key);
+
+int sm2_sign_ex(const unsigned char *dgst,  unsigned long dgstlen,
+                struct sm2_sign_st *out, const ecc_key *key, const char *ik);
+
 #endif  /* LTC_SM2 */
 
 #ifdef LTC_MDSA
