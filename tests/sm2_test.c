@@ -143,6 +143,55 @@ int sm2_sign_test(void) {
     return 0;
 }
 
+int sm2_verify_test(void) {
+    int err;
+    struct ltc_signtest {
+        const char* k;
+        unsigned char e[SM3_DIGEST_LENGTH];
+        unsigned char r[32];
+        unsigned char s[32];
+    } sign_tests[] = {
+      {
+        "3945208F7B2144B13F36E38AC6D39F95889393692860B51A42FB81EF4DF7C5B8",
+        {
+          0xF0, 0xB4, 0x3E, 0x94, 0xBA, 0x45, 0xAC, 0xCA, 0xAC, 0xE6, 0x92, 0xED, 0x53, 0x43, 0x82, 0xEB,
+          0x17, 0xE6, 0xAB, 0x5A, 0x19, 0xCE, 0x7B, 0x31, 0xF4, 0x48, 0x6F, 0xDF, 0xC0, 0xD2, 0x86, 0x40,
+        },
+        {
+          0xF5, 0xA0, 0x3B, 0x06, 0x48, 0xD2, 0xC4, 0x63, 0x0E, 0xEA, 0xC5, 0x13, 0xE1, 0xBB, 0x81, 0xA1,
+          0x59, 0x44, 0xDA, 0x38, 0x27, 0xD5, 0xB7, 0x41, 0x43, 0xAC, 0x7E, 0xAC, 0xEE, 0xE7, 0x20, 0xB3,
+        },
+        {
+          0xB1, 0xB6, 0xAA, 0x29, 0xDF, 0x21, 0x2F, 0xD8, 0x76, 0x31, 0x82, 0xBC, 0x0D, 0x42, 0x1C, 0xA1,
+          0xBB, 0x90, 0x38, 0xFD, 0x1F, 0x7F, 0x42, 0xD4, 0x84, 0x0B, 0x69, 0xC4, 0x85, 0xBB, 0xC1, 0xAA,
+        }
+      },
+    };
+
+    ecc_key usera;
+    struct sm2_sign_st sig;
+    int stat;
+    ulong32 i;
+
+    for (i = 0; i < sizeof(sign_tests) / sizeof(sign_tests[0]); i++) {
+        DO(sm2_make_key_test(sign_tests[i].k, &usera));
+        mp_init_multi(&sig.r, &sig.s, NULL);
+        mp_read_unsigned_bin(sig.r, sign_tests[i].r, sizeof(sign_tests[i].r));
+        mp_read_unsigned_bin(sig.s, sign_tests[i].s, sizeof(sign_tests[i].s));
+
+        if ((err = sm2_verify(&sig, sign_tests[i].e, sizeof(sign_tests[i].e), &stat, &usera)) != CRYPT_OK) {
+            return err;
+        };
+
+        if (stat == 0)
+            return 1;
+
+        mp_clear_multi(sig.r, sig.s, NULL);
+    }
+
+    return 0;
+}
+
 int sm2_tests(void)
 {
     int err;
@@ -226,6 +275,10 @@ int sm2_tests(void)
     }
 
     if ((err = sm2_sign_test()) != CRYPT_OK) {
+        return err;
+    }
+
+    if ((err = sm2_verify_test()) != CRYPT_OK) {
         return err;
     }
 

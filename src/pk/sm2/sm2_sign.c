@@ -173,4 +173,123 @@ errnokey:
     return err;
 }
 
+/**
+   Verify an SM2 signature
+   @param sig         The signature to verify
+   @param dgst        The message digest that was signed
+   @param dgstlen     The length of the hash (octets)
+   @param stat        Result of signature, 1==valid, 0==invalid
+   @param key         The corresponding public ECC key
+   @return CRYPT_OK if successful (even if the signature is not valid)
+*/
+int sm2_verify(const struct sm2_sign_st *sig,
+               const unsigned char *dgst, unsigned long dgstlen,
+               int *stat, const ecc_key *key)
+{
+    ecc_point     *mG = NULL, *mQ = NULL;
+    void          *r, *s, *v, *t, *e, *n, *p, *a, *a_plus3;
+    void          *mu = NULL, *ma = NULL;
+    void          *mp = NULL;
+    int           err;
+
+    LTC_ARGCHK(sig  != NULL);
+    LTC_ARGCHK(dgst != NULL);
+    LTC_ARGCHK(stat != NULL);
+    LTC_ARGCHK(key  != NULL);
+
+    /* default to invalid signature */
+    *stat = 0;
+
+    /* allocate ints */
+    if ((err = mp_init_multi(&v, &t, &e, &a_plus3, NULL)) != CRYPT_OK) {
+        return err;
+    }
+
+    n = key->dp.order;
+    p = key->dp.prime;
+    a = key->dp.A;
+    if ((err = mp_add_d(a, 3, a_plus3)) != CRYPT_OK) {
+        goto error;
+    }
+
+    /* allocate points */
+    mG = ltc_ecc_new_point();
+    mQ = ltc_ecc_new_point();
+    if (mQ  == NULL || mG == NULL) {
+        err = CRYPT_MEM;
+        goto error;
+    }
+
+    r = sig->r;
+    s = sig->s;
+
+    /* check r, s in [1, n - 1] */
+    if (mp_cmp_d(r, 0) != LTC_MP_GT || mp_cmp_d(s, 0) != LTC_MP_GT ||
+        mp_cmp(r, n) != LTC_MP_LT || mp_cmp(s, n) != LTC_MP_LT) {
+        err = CRYPT_INVALID_PACKET;
+        goto error;
+    }
+
+    /* according GM/T 0003.1-2012 chapter 4.2.4 & 4.2.3 */
+    /* get the hash and load it as a bignum into 'e' */
+    if ((err = mp_read_unsigned_bin(e, (unsigned char *)dgst, dgstlen)) != CRYPT_OK)                  { goto error; }
+
+    /* t = (r + s) mod n */
+    if ((err = mp_addmod(r, s, n, t)) != CRYPT_OK)                                                          { goto error; }
+    if (mp_iszero(t)) {
+        err = CRYPT_INVALID_PACKET;
+        goto error;
+    }
+
+    /* compute [s] * G + [t] * PA */
+
+    /* find mG and mQ */
+    if ((err = ltc_ecc_copy_point(&key->dp.base, mG)) != CRYPT_OK)                                       { goto error; }
+    if ((err = ltc_ecc_copy_point(&key->pubkey, mQ)) != CRYPT_OK)                                        { goto error; }
+
+    /* find the montgomery mp */
+    if ((err = mp_montgomery_setup(p, &mp)) != CRYPT_OK)                                                 { goto error; }
+
+    /* for curves with a == -3 keep ma == NULL */
+    if (mp_cmp(a_plus3, p) != LTC_MP_EQ) {
+        if ((err = mp_init_multi(&mu, &ma, NULL)) != CRYPT_OK)                                            { goto error; }
+        if ((err = mp_montgomery_normalization(mu, p)) != CRYPT_OK)                                       { goto error; }
+        if ((err = mp_mulmod(a, mu, p, ma)) != CRYPT_OK)                                                  { goto error; }
+    }
+
+    /* compute s * mG + t * mQ */
+    if (ltc_mp.ecc_mul2add == NULL) {
+        if ((err = ltc_mp.ecc_ptmul(s, mG, mG, a, p, 0)) != CRYPT_OK)                                    { goto error; }
+        if ((err = ltc_mp.ecc_ptmul(t, mQ, mQ, a, p, 0)) != CRYPT_OK)                                    { goto error; }
+
+        /* add them */
+        if ((err = ltc_mp.ecc_ptadd(mQ, mG, mG, ma, p, mp)) != CRYPT_OK)                                  { goto error; }
+
+        /* reduce */
+        if ((err = ltc_mp.ecc_map(mG, p, mp)) != CRYPT_OK)                                                { goto error; }
+    } else {
+        /* use Shamir's trick to compute u1*mG + u2*mQ using half of the doubles */
+        if ((err = ltc_mp.ecc_mul2add(mG, s, mQ, t, mG, ma, p)) != CRYPT_OK)                            { goto error; }
+    }
+
+    /* v = (e + x1) mod n */
+    if ((err = mp_addmod(mG->x, e, n, v)) != CRYPT_OK)                                                         { goto error; }
+
+    /* does v == r */
+    if (mp_cmp(v, r) == LTC_MP_EQ) {
+        *stat = 1;
+    }
+
+    /* clear up and return */
+    err = CRYPT_OK;
+error:
+    if (mG != NULL) ltc_ecc_del_point(mG);
+    if (mQ != NULL) ltc_ecc_del_point(mQ);
+    if (mu != NULL) mp_clear(mu);
+    if (ma != NULL) mp_clear(ma);
+    mp_clear_multi(v, t, e, a_plus3, NULL);
+    if (mp != NULL) mp_montgomery_free(mp);
+    return err;
+}
+
 #endif  /* LTC_SM2 */
