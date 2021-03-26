@@ -406,6 +406,12 @@ int sm2_sign_ex(const unsigned char *dgst,  unsigned long dgstlen,
 int sm2_verify(const struct sm2_sign_st *sig,
                const unsigned char *dgst, unsigned long dgstlen,
                int *stat, const ecc_key *key);
+
+int sm2_encrypt(const unsigned char *in, size_t inlen,
+                unsigned char *out, size_t *outlen, ecc_key *key);
+
+int sm2_encrypt_ex(const unsigned char *in, size_t inlen,
+                unsigned char *out, size_t *outlen, ecc_key *key, const char *ik);
 #endif  /* LTC_SM2 */
 
 #ifdef LTC_MDSA
