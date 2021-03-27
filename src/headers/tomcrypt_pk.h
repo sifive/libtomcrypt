@@ -412,6 +412,9 @@ int sm2_encrypt(const unsigned char *in, size_t inlen,
 
 int sm2_encrypt_ex(const unsigned char *in, size_t inlen,
                 unsigned char *out, size_t *outlen, ecc_key *key, const char *ik);
+
+int sm2_decrypt(const unsigned char *in, size_t inlen,
+                unsigned char *out, size_t *outlen, ecc_key *key);
 #endif  /* LTC_SM2 */
 
 #ifdef LTC_MDSA
