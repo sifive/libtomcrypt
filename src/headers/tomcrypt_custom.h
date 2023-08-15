@@ -10,7 +10,7 @@
 #ifndef TOMCRYPT_CUSTOM_H_
 #define TOMCRYPT_CUSTOM_H_
 
-#include "glib-compat.h"
+#include "qemu/osdep.h"
 
 #define LTC_NO_TEST
 #define LTC_EASY
