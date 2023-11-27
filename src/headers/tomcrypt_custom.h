@@ -4,7 +4,8 @@
 #ifndef TOMCRYPT_CUSTOM_H_
 #define TOMCRYPT_CUSTOM_H_
 
-#include "qemu/osdep.h"
+#include <stdlib.h>
+#include <string.h>
 
 #define LTC_NO_TEST
 #define LTC_EASY
@@ -12,16 +13,16 @@
 
 /* macros for various libc functions you can change for embedded targets */
 #ifndef XMALLOC
-#define XMALLOC  g_malloc
+#define XMALLOC  malloc
 #endif
 #ifndef XREALLOC
-#define XREALLOC g_realloc
+#define XREALLOC realloc
 #endif
 #ifndef XCALLOC
-#define XCALLOC(_c_, _s_)  (void *)g_malloc0((_c_) * (_s_))
+#define XCALLOC  calloc
 #endif
 #ifndef XFREE
-#define XFREE    g_free
+#define XFREE    free
 #endif
 
 #ifndef XMEMSET
