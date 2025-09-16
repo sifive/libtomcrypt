@@ -496,7 +496,7 @@ int dsa_shared_secret(void          *private_key, void *base,
                       unsigned char *out,         unsigned long *outlen);
 #endif /* LTC_MDSA */
 
-#ifdef LTC_DER
+#if 1
 /* DER handling */
 
 typedef enum ltc_asn1_type_ {
