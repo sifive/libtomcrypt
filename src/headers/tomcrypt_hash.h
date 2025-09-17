@@ -427,6 +427,8 @@ void sha256_hca_init(uint32_t *state, bool sha224);
 void sha256_hca_compress(uint32_t *state, const uint8_t *buf);
 void sha512_hca_init(uint64_t *state, bool sha384);
 void sha512_hca_compress(uint64_t *state, const uint8_t *buf);
+void sm3_hca_init(uint32_t *state);
+void sm3_hca_compress(uint32_t *state, const uint8_t *buf);
 #endif
 
 #ifdef LTC_SHA1
